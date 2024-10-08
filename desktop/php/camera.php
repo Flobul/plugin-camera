@@ -213,9 +213,14 @@ $eqLogics = eqLogic::byType($plugin->getId());
 								</div>
 							</div>
 							<div class="form-group">
-                                <label class="col-sm-4 control-label">{{Convertir en x264 le flux RTSP}}</label>
+								<label class="col-sm-4 control-label">{{Encodage audio/vidéo}}</label>
 								<div class="col-sm-6">
-									<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="encodeX264RTSP" />
+									<select class="eqLogicAttr form-control roundedLeft" data-l1key="configuration" data-l2key="encodeAV">
+										<option value='copy'>{{Copie audio/vidéo}}</option>
+										<option value='video'>{{Encode vidéo}}</option>
+										<option value='audio'>{{Encode audio}}</option>
+										<option value='both'>{{Encode audio/vidéo}}</option>
+									</select>
 								</div>
 							</div>
 							<div class="form-group">
