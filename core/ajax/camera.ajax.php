@@ -31,7 +31,17 @@ try {
 		if(!is_object($camera)){
 			throw new \Exception(__('Impossible de trouver la camera : ',__FILE__).init('id'));
 		}
-        $rtspScript = dirname(__FILE__) . '/../../3rdparty/rtsp-to-hls-' . ($camera->getConfiguration('encodeX264RTSP', 0) == 1 ? 'x264' : 'copy') . '.sh ';
+		$encodeAV = $camera->getConfiguration('encodeAV', 'copy');
+		if ($encodeAV == 'audio') {
+			$encodeFile = 'aac';
+		} else if ($encodeAV == 'video') {
+			$encodeFile = 'x264';
+		} else if ($encodeAV == 'both') {
+			$encodeFile = 'x264-aac';
+		} else {
+			$encodeFile = 'copy';
+		}
+		$rtspScript = dirname(__FILE__) . '/../../3rdparty/rtsp-to-hls-' . $encodeFile . '.sh ';
 		if(count(system::ps('rtsp-to-hls-*.sh.*'.$camera->getConfiguration('localApiKey'))) == 0){
 			shell_exec('(ps ax || ps w) | grep ffmpeg.*'.$camera->getConfiguration('localApiKey').' | awk \'{print $2}\' |  xargs sudo kill -9');
 			$replace = array(
